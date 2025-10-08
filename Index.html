@@ -1,1 +1,581 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Groupe Scolaire Les Lumières — Podcast</title>
 
+  <!-- Google font (geometric, school-like headings + clean body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --red: #B22222;
+      --gold: #FFB800;
+      --soft-gold: #FFD54F;
+      --burgundy: #7A1C1C;
+      --white: #FFFFFF;
+      --muted: #E0E0E0;
+
+      --glass-bg: rgba(255,255,255,0.12);
+      --glass-border: rgba(255,255,255,0.14);
+      --glass-radius: 14px;
+      --glass-blur: 10px;
+      --max-width: 1100px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, var(--red) 0%, #951919 60%);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-y:scroll;
+      line-height:1.45;
+    }
+
+    /* Floating glowing orbs background */
+    .orb {
+      position:fixed;
+      border-radius:50%;
+      filter:blur(40px);
+      opacity:.14;
+      mix-blend-mode:screen;
+      pointer-events:none;
+      z-index:0;
+      animation: floaty 18s ease-in-out infinite;
+    }
+    .orb--a{ width:420px; height:420px; background:var(--soft-gold); left:-80px; top:10vh; animation-duration:24s }
+    .orb--b{ width:260px; height:260px; background:var(--gold); right:-60px; top:30vh; animation-duration:20s; opacity:.12 }
+    .orb--c{ width:160px; height:160px; background:#ff9b00; left:10%; top:70vh; animation-duration:28s; opacity:.08 }
+
+    @keyframes floaty {
+      0% {transform: translateY(0) translateX(0) scale(1)}
+      50% {transform: translateY(-30px) translateX(20px) scale(1.03)}
+      100% {transform: translateY(0) translateX(0) scale(1)}
+    }
+
+    /* page wrapper */
+    .wrap{max-width:var(--max-width); margin:0 auto; padding:28px; position:relative; z-index:2}
+
+    /* NAV */
+    header{
+      position:sticky;
+      top:12px;
+      z-index:10;
+      display:flex;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .nav{
+      width:100%;
+      max-width:var(--max-width);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 14px;
+      border-radius:12px;
+      background:var(--glass-bg);
+      border:1px solid var(--glass-border);
+      backdrop-filter: blur(var(--glass-blur));
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+      pointer-events:auto;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    /* simple logo: circular red with L + mic svg */
+    .logo{
+      width:56px;height:56px;
+      background:var(--red);
+      border-radius:50%;
+      display:inline-grid;
+      place-items:center;
+      position:relative;
+      box-shadow: inset 0 -3px 0 rgba(0,0,0,0.08);
+      flex-shrink:0;
+    }
+    .logo svg{width:40px;height:40px; display:block}
+
+    .site-title{font-weight:700; font-family: "Montserrat", "Poppins"; color:var(--white); letter-spacing:0.2px}
+    nav ul{list-style:none;margin:0;padding:0;display:flex;gap:18px;align-items:center}
+    nav a{color:var(--white); text-decoration:none; font-weight:500; opacity:0.95}
+    nav a:hover{color:var(--soft-gold)}
+    .cta{
+      background:linear-gradient(180deg,var(--gold),var(--soft-gold));
+      color:var(--burgundy);
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:700;
+      border:none;
+      cursor:pointer;
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .cta:hover{transform:translateY(-3px); box-shadow:0 10px 30px rgba(255,184,0,0.18)}
+
+    /* mobile hamburger */
+    .hamburger{display:none; background:none; border:0; color:var(--white); cursor:pointer}
+    .nav-right{display:flex; gap:18px; align-items:center}
+
+    /* HERO */
+    .hero{padding:72px 12px; display:flex; gap:28px; align-items:center; justify-content:space-between}
+    .hero-inner{flex:1; max-width:720px}
+    .eyebrow{display:inline-block; color:var(--soft-gold); font-weight:700; margin-bottom:8px}
+    h1{
+      margin:6px 0 14px; font-size:clamp(28px,4.6vw,46px);
+      line-height:1.02; font-family: "Montserrat", "Poppins"; color:var(--white);
+      text-shadow: 0 2px 0 rgba(0,0,0,0.08)
+    }
+    .lead{color:var(--muted); margin-bottom:18px; font-size:1.05rem}
+    .hero-actions{display:flex; gap:12px; align-items:center}
+
+    /* glass card in hero */
+    .glass-card{
+      border-radius:16px; padding:18px; background:var(--glass-bg);
+      border:1px solid var(--glass-border); backdrop-filter:blur(var(--glass-blur));
+      display:inline-flex; gap:14px; align-items:center;
+    }
+    .play-btn{
+      width:58px;height:58px;border-radius:12px;background:var(--gold);display:grid;place-items:center;color:var(--burgundy);font-weight:800;border:none;cursor:pointer;font-size:20px;
+    }
+
+    /* Episodes grid */
+    .section{padding:40px 12px}
+    .section h2{font-family:"Montserrat"; margin:0 0 18px}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+    }
+    .episode{
+      background:var(--glass-bg);
+      border:1px solid var(--glass-border);
+      border-radius:14px;
+      padding:16px;
+      backdrop-filter:blur(var(--glass-blur));
+      transition:transform .18s ease, box-shadow .18s ease;
+      display:flex; gap:12px; align-items:flex-start; flex-direction:column;
+    }
+    .episode:hover{transform:translateY(-6px); box-shadow:0 14px 40px rgba(0,0,0,0.16)}
+    .episode .meta{display:flex; gap:10px; align-items:center; width:100%; justify-content:space-between}
+    .episode .title{font-weight:700}
+    .episode .desc{color:var(--muted); font-size:.95rem}
+    .episode .controls{display:flex; gap:8px; align-items:center; width:100%}
+    .progress{
+      height:8px; background:rgba(255,255,255,0.08); border-radius:8px; overflow:hidden; flex:1
+    }
+    .progress > i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--gold),var(--soft-gold)); border-radius:8px}
+
+    /* Team */
+    .team-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .profile{
+      display:flex; flex-direction:column; align-items:center; gap:10px;
+      padding:16px; border-radius:14px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(var(--glass-blur));
+    }
+    .avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(180deg,var(--gold),var(--soft-gold)); display:grid; place-items:center; font-weight:800; color:var(--burgundy); font-size:28px}
+
+    /* Contact */
+    form{display:grid; gap:10px; max-width:600px}
+    input,textarea{
+      padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.04); color:var(--white);
+    }
+    textarea{min-height:120px; resize:vertical}
+    .btn-submit{background:var(--gold); color:var(--burgundy); padding:12px 14px; border-radius:10px; border:0; font-weight:700; cursor:pointer}
+
+    footer{
+      margin-top:28px; padding:28px 12px; background:var(--burgundy); border-top:4px solid rgba(255,255,255,0.03)
+    }
+
+    /* small screens */
+    @media (max-width:900px){
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .team-grid{grid-template-columns:repeat(2,1fr)}
+      .hero{flex-direction:column; align-items:flex-start; gap:20px}
+      .hamburger{display:block}
+      nav ul{display:none}
+    }
+    @media (max-width:560px){
+      .grid{grid-template-columns:1fr}
+      .team-grid{grid-template-columns:1fr}
+      .nav-right{gap:10px}
+      .hero-inner{width:100%}
+    }
+
+    /* fade-in */
+    .reveal{opacity:0; transform:translateY(16px); transition: all .7s cubic-bezier(.2,.9,.2,1)}
+    .reveal.revealed{opacity:1; transform:none}
+
+    /* back-to-top */
+    .top-btn{
+      position:fixed; right:18px; bottom:18px; z-index:50;
+      width:56px;height:56px;border-radius:12px;background:var(--gold); color:var(--burgundy); display:grid;place-items:center;border:none; cursor:pointer; box-shadow:0 10px 28px rgba(0,0,0,0.18)
+    }
+  </style>
+</head>
+<body>
+
+  <!-- floating orbs -->
+  <div class="orb orb--a"></div>
+  <div class="orb orb--b"></div>
+  <div class="orb orb--c"></div>
+
+  <!-- header/nav -->
+  <header>
+    <div class="nav" role="banner" aria-label="Main navigation">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <!-- small svg: L + mic silhouette -->
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="31" fill="#B22222"/>
+            <!-- Left L -->
+            <path d="M18 18h8v26h-8z" fill="#FFB800"/>
+            <!-- Mic replacing second L (simplified) -->
+            <rect x="34" y="18" width="6" height="16" rx="3" fill="#FFB800"/>
+            <path d="M33 36h10v2h-10z" fill="#FFB800"/>
+            <rect x="36" y="40" width="2" height="6" rx="1" fill="#FFB800"/>
+            <!-- sun rays small -->
+            <g fill="#FFD54F" opacity="0.95">
+              <rect x="26" y="8" width="12" height="2" rx="1"/>
+              <rect x="48" y="26" width="2" height="12" rx="1" transform="rotate(45 49 32)"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div class="site-title">Groupe Scolaire Les Lumières</div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.85)">Le Podcast Officiel</div>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#episodes">Episodes</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <button class="cta" onclick="document.querySelector('#episodes .episode .play-btn').click()">🎧 Listen Now</button>
+        <button class="hamburger" aria-label="Open menu" onclick="toggleMobileMenu()">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="home">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner reveal">
+        <div class="eyebrow">🎙️ Nouveau</div>
+        <h1>Your School. Your Voice. — Le Podcast de <span style="color:var(--soft-gold)">Groupe Scolaire Les Lumières</span></h1>
+        <p class="lead">Bienvenue au podcast officiel de l'école. Des histoires d'élèves, des idées, des interviews et des projets — partagés par notre communauté.</p>
+
+        <div class="hero-actions">
+          <div class="glass-card">
+            <button class="play-btn" title="Play latest episode" onclick="playEpisodeByIndex(0)">▶</button>
+            <div>
+              <div style="font-weight:800">Épisode le plus récent</div>
+              <div style="color:var(--muted); font-size:.95rem">Titre: Découvrir la lumière — Une conversation avec les élèves</div>
+            </div>
+          </div>
+
+          <button class="cta" onclick="document.getElementById('episodes').scrollIntoView({behavior:'smooth'})">Tous les épisodes</button>
+        </div>
+      </div>
+
+      <!-- small decorative glass card on right -->
+      <aside class="reveal" style="min-width:280px; max-width:320px">
+        <div style="border-radius:16px; padding:18px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(var(--glass-blur));">
+          <div style="display:flex; gap:12px; align-items:center">
+            <div style="width:64px; height:64px; border-radius:12px; background:linear-gradient(180deg,var(--gold),var(--soft-gold)); display:grid; place-items:center; color:var(--burgundy); font-weight:800">LS</div>
+            <div>
+              <div style="font-weight:700">Le Podcast</div>
+              <div style="color:var(--muted); font-size:.95rem">Des voix d'élèves, des idées neuves.</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- EPISODES -->
+    <section id="episodes" class="section reveal">
+      <h2>Derniers épisodes</h2>
+      <div class="grid" id="episodesGrid">
+        <!-- episodes inserted by JS -->
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section reveal">
+      <h2>À propos</h2>
+      <div style="border-radius:14px; padding:18px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(var(--glass-blur));">
+        <p style="margin:0;color:var(--muted)">
+          Le podcast officiel de <strong>Groupe Scolaire Les Lumières</strong> donne la parole aux élèves et enseignants. Chaque épisode met en lumière les projets, idées et histoires qui façonnent notre communauté.
+        </p>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team" class="section reveal">
+      <h2>Rencontrez l'équipe</h2>
+      <div class="team-grid">
+        <div class="profile">
+          <div class="avatar">AZ</div>
+          <div style="font-weight:700">Akram Zekri</div>
+          <div style="color:var(--muted)">Présentateur</div>
+        </div>
+        <div class="profile">
+          <div class="avatar">SA</div>
+          <div style="font-weight:700">Samira</div>
+          <div style="color:var(--muted)">Co-animatrice</div>
+        </div>
+        <div class="profile">
+          <div class="avatar">MR</div>
+          <div style="font-weight:700">M. Rahimi</div>
+          <div style="color:var(--muted)">Professeur & conseiller</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section reveal">
+      <h2>Contact</h2>
+      <div style="display:flex; gap:18px; flex-wrap:wrap">
+        <form id="contactForm" onsubmit="submitContact(event)">
+          <input type="text" id="name" placeholder="Votre nom" required>
+          <input type="email" id="email" placeholder="Votre email" required>
+          <textarea id="message" placeholder="Votre message" required></textarea>
+          <button class="btn-submit" type="submit">Envoyer</button>
+        </form>
+
+        <div style="min-width:260px; align-self:flex-start">
+          <div style="border-radius:14px; padding:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(var(--glass-blur));">
+            <strong>Infos</strong>
+            <p style="color:var(--muted)">Pour suggestions, collaborations, ou questions — contactez l'équipe du podcast.</p>
+            <p style="margin:10px 0 0"><small style="color:var(--soft-gold)">Spotify • Apple Podcasts • YouTube</small></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="reveal">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap">
+        <div>
+          <strong>Groupe Scolaire Les Lumières</strong>
+          <div style="color:var(--muted)">© <span id="year"></span> Tous droits réservés</div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center">
+          <a href="#" style="color:var(--white); text-decoration:none">Politique de confidentialité</a>
+          <a href="#" style="color:var(--white); text-decoration:none">Mentions légales</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <button class="top-btn" title="Back to top" onclick="scrollToTop()">↑</button>
+
+  <script>
+    // basic data (sample episodes)
+    const EPISODES = [
+      {title: "Découvrir la lumière", desc: "Conversation avec les élèves sur un projet de sciences.", date: "2025-09-30", duration: "12:45"},
+      {title: "Club Théâtre : coulisses", desc: "Les coulisses du club théâtre et leurs histoires.", date: "2025-09-16", duration: "22:03"},
+      {title: "Rencontre avec M. Rahimi", desc: "Entretien sur l'importance de l'engagement scolaire.", date: "2025-09-01", duration: "18:10"},
+      {title: "Atelier musique", desc: "Projet musical des classes de 2ème.", date: "2025-08-19", duration: "09:45"},
+      {title: "Journée éco-école", desc: "Actions et retours des élèves", date: "2025-07-28", duration: "15:05"},
+      {title: "La voix des lycéens", desc: "Débats et opinions sur la vie scolaire.", date: "2025-06-12", duration: "25:12"}
+    ];
+
+    // create episode cards
+    const grid = document.getElementById('episodesGrid');
+    EPISODES.forEach((ep, i) => {
+      const div = document.createElement('div');
+      div.className = 'episode reveal';
+      div.innerHTML = `
+        <div style="display:flex; gap:12px; align-items:center; width:100%">
+          <div style="width:76px; height:76px; border-radius:10px; background:linear-gradient(180deg,var(--gold),var(--soft-gold)); display:grid; place-items:center; color:var(--burgundy); font-weight:800">EP</div>
+          <div style="flex:1">
+            <div class="title">${ep.title}</div>
+            <div class="desc">${ep.desc}</div>
+            <div style="color:var(--muted); font-size:.85rem; margin-top:6px">${ep.date} • ${ep.duration}</div>
+          </div>
+        </div>
+
+        <div class="controls" style="width:100%; margin-top:12px; align-items:center">
+          <button class="play-btn small" style="width:46px;height:46px;border-radius:10px;font-size:16px" data-index="${i}">▶</button>
+          <div class="progress" aria-hidden="true"><i></i></div>
+          <div style="min-width:70px; text-align:right; color:var(--muted); font-size:.9rem" data-time>0:00</div>
+        </div>
+      `;
+      grid.appendChild(div);
+    });
+
+    // audio simulation using WebAudio + progress UI
+    let audioCtx = null;
+    let currentSource = null;
+    let currentGain = null;
+    let playingIndex = null;
+    let progressIntervals = {};
+
+    function playEpisodeByIndex(idx){
+      const btn = document.querySelector('.play-btn.small[data-index="'+idx+'"]') || document.querySelector('.hero .play-btn');
+      if(btn) btn.click();
+    }
+
+    function makeAudioContext(){
+      if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    document.querySelectorAll('.play-btn.small').forEach(btn=>{
+      btn.addEventListener('click', async (e)=>{
+        const index = Number(btn.dataset.index);
+        // if same -> stop
+        if(playingIndex === index){
+          stopCurrent();
+          return;
+        }
+        // stop previous
+        stopCurrent();
+
+        // start new simulated audio
+        makeAudioContext();
+        const durationSecs = Math.max(15, Math.floor(Math.random()*120)); // simulate duration 15-120s
+        playingIndex = index;
+
+        // UI
+        btn.textContent = '▌▌';
+        btn.style.background = 'linear-gradient(180deg,var(--soft-gold),var(--gold))';
+
+        const epCard = btn.closest('.episode');
+        const progressBar = epCard.querySelector('.progress > i');
+        const timeLabel = epCard.querySelector('[data-time]');
+        let start = Date.now();
+        let elapsed = 0;
+
+        // use oscillator as placeholder sound
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(220 + Math.random()*220, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+        osc.connect(gain).connect(audioCtx.destination);
+        osc.start();
+
+        // gentle envelope
+        gain.gain.exponentialRampToValueAtTime(0.04, audioCtx.currentTime + 0.05);
+
+        currentSource = osc;
+        currentGain = gain;
+
+        progressIntervals[index] = setInterval(()=>{
+          elapsed = (Date.now() - start)/1000;
+          const pct = Math.min(1, elapsed / durationSecs);
+          progressBar.style.width = (pct*100)+'%';
+          timeLabel.textContent = formatTime(Math.floor(elapsed)) + ' / ' + formatTime(durationSecs);
+          if(pct >= 1){
+            stopCurrent();
+          }
+        }, 200);
+      });
+    });
+
+    function stopCurrent(){
+      if(playingIndex === null) return;
+      // clear intervals
+      if(progressIntervals[playingIndex]){ clearInterval(progressIntervals[playingIndex]); delete progressIntervals[playingIndex]; }
+      // reset UI for that episode
+      const oldBtn = document.querySelector('.play-btn.small[data-index="'+playingIndex+'"]');
+      if(oldBtn){
+        oldBtn.textContent = '▶';
+        oldBtn.style.background = '';
+        const epCard = oldBtn.closest('.episode');
+        if(epCard){
+          epCard.querySelector('.progress > i').style.width = '0%';
+          epCard.querySelector('[data-time]').textContent = '0:00';
+        }
+      }
+      // stop audio
+      if(currentGain){ currentGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2); currentGain = null; }
+      if(currentSource){ try{ currentSource.stop(); }catch(e){} currentSource = null;}
+      playingIndex = null;
+    }
+
+    function formatTime(sec){
+      const m = Math.floor(sec/60);
+      const s = sec%60;
+      return m+':'+(s<10?'0':'')+s;
+    }
+
+    // smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        e.preventDefault();
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    // reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{
+        if(ent.isIntersecting){ ent.target.classList.add('revealed'); io.unobserve(ent.target) }
+      });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // contact form (client-side simulation)
+    function submitContact(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      alert('Merci, '+name+' — message reçu (simulation). Vous pouvez connecter un backend pour envoyer réellement le message.)');
+      e.target.reset();
+    }
+
+    // mobile menu (simple)
+    let menuOpen = false;
+    function toggleMobileMenu(){
+      menuOpen = !menuOpen;
+      const ul = document.querySelector('nav ul');
+      if(!ul) return;
+      if(menuOpen){
+        ul.style.display = 'flex';
+        ul.style.position = 'absolute';
+        ul.style.right = '12px';
+        ul.style.top = '68px';
+        ul.style.background = 'var(--glass-bg)';
+        ul.style.padding = '12px';
+        ul.style.borderRadius = '10px';
+        ul.style.flexDirection = 'column';
+      }else{
+        ul.style.display = '';
+        ul.style.position = '';
+      }
+    }
+
+    // back to top
+    function scrollToTop(){ window.scrollTo({top:0, behavior:'smooth'}) }
+
+    // hide/show top button
+    const topBtn = document.querySelector('.top-btn');
+    window.addEventListener('scroll', ()=>{
+      if(window.scrollY > 300) topBtn.style.display = 'grid';
+      else topBtn.style.display = 'none';
+    });
+    topBtn.style.display = 'none';
+
+    // improve keyboard accessibility: stop audio on route change (hashchange)
+    window.addEventListener('hashchange', stopCurrent);
+
+  </script>
+</body>
+</html>
